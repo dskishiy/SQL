@@ -48,4 +48,13 @@ left join BIT_DB.FebSales Feb
 on cust.order_id=Feb.orderID
 where length(orderID) = 6
 and orderID <> 'Order ID'
+and Feb.Quantity>2;
+select Product, SUM(quantity) as Total
+from BIT_DB.FebSales
+where length(orderID) = 6
+and orderID <> 'Order ID'
+and location like '%Los Angeles%'
+group by Product;
+where length(orderID) = 6
+and orderID <> 'Order ID'
 and Feb.Quantity>2
