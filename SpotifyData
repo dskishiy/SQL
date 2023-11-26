@@ -1,0 +1,41 @@
+select count(distinct artist_name) as Artists
+from Spotifydata;
+
+select 
+artist_name
+,sum(danceability)/count(track_id) as AVG_Danceability
+from Spotifydata
+group by artist_name
+order by AVG_Danceability desc;
+
+select 
+artist_name
+, sum(popularity)/count(track_id) as Avg_popularity
+from Spotifydata
+group by artist_name 
+order by Avg_popularity desc limit 10;
+
+select 
+track_name
+,artist_name
+, popularity
+from Spotifydata
+order by popularity desc limit 10;
+
+select
+artist_name, track_name, duration_ms
+from Spotifydata
+where duration_ms=(select max(duration_ms) as MaxDuration
+from Spotifydata);
+
+with tempTable as (
+    select
+    artist_name
+    ,sum(s.popularity)/count(s.track_id) as AvgPopularity
+    from Spotifydata s
+    group by s.artist_name
+    )
+    select artist_name, AvgPopularity, 'Top Star' as tag 
+    from tempTable
+    where AvgPopularity>=90
+    order by AvgPopularity desc;
